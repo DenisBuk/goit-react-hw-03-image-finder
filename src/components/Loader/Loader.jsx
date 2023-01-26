@@ -4,13 +4,16 @@ import './ Loader.css';
 const Loader = () => { 
     return (
         <div className="Spinner">
-            <RotatingLines
-                strokeColor="grey"
-                strokeWidth="4"
-                animationDuration="0.75"
-                width="96"
+            <ThreeDots
+                height="80"
+                width="80"
+                radius="9"
+                color="#000000"
+                ariaLabel="three-dots-loading"
                 visible={true}
             />
-        </section>
+        </div>
     );
 };
+
+export default Loader;
