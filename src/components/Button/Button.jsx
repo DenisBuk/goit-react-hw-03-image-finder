@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const Button = ({ omClick }) => { 
     return (
-        <button className="Button-load" onClick={onClick}>
+        <button className="Button-load" onClick={onclick}>
                 Load more
             </button>
     );
