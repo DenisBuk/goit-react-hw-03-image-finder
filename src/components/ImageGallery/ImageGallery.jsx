@@ -1,24 +1,20 @@
-import {ImageGalleryItems }  from '../ImageGalleryItem/ImageGalleryItem'; 
-import css from "./ImageGallery.module.css";
+import { ImageGalleryItems } from '../ImageGalleryItem'; 
+import './ImageGellery.css';
 
-export const ImageGallery = ({
-    images,
-    handleModalImage,
-    handleModalAlt,
-    showModal,
-
-}) => { 
+function ImageGallery ({ items}) { 
     return (
-        <section>
-            <h2 className="visually-hidden">gallery section</h2>
-        <ul classname={css.ImageGallery}>
-                <ImageGallery
-                    images={images}
-                    handleModalImage={handleModalImage}
-                    handleModalAlt={handleModalAlt}
-                    showModal={showModal}
-                />
+        <>
+            <ul classname={ImageGallery}>
+                {items.map(item => (
+                    <ImageGalleryItem key={item.id} item={ item} />
+                ))}
             </ul>
-            </section>
+    </>
     );
+}
+
+export default ImageGallery;
+
+ImageGallery.propTypes = {
+    items: PropTypes.array,
 };

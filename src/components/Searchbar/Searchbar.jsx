@@ -2,50 +2,49 @@ import './Searchbar.css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import { ImSearch } from 'react-icons/im';
+class Searchbar extends Component {
 
-export default class Searchbar extends Component {
     
     state = {
-        searchImage: '',
+        inputData: '',
     };
 
-    handleImageChange = event => {
-        this.setState({ searchImage: event.currentTarget.value.toLowerCase() });
+    onChange = event => {
+        this.setState({ inputData: event.currentTarget.value.toLowerCase() });
     };
 
     handleSubmit = event => {
         event.preventDefault();
-
-        if (this.state.searchImage.trim() === '') {
-            return alert('Please, enter image name.');
-        }
-
-        this.props.onSubmit(this.state.searchImage);
+        this.props.onSubmit(this.state.inputData);
+        this.setState({ inputData: '' });
     };
 
     render() {
+        const { inputData } = this.state.inputData;
         return (
-            <header className={css.Searchbar}>
-                <h1 className="visually-hidden">images gallery</h1>
-                <form className={css.SearchForm} onSubmit={this.handleSubmit}>
-                    <label htmlFor="searchInput"></label>
+            <header className={Searchbar}>
+                <form className={SearchForm} onSubmit={this.handleSubmit}>
+                    <button type="submit" className={SearchFormButton}>
+                        <IMSearch size={25} />
+                    </button>
+
                     <input
-                        id="searchInput"
+                        className="SearchFormInput"
+                        name="inputData"
+                        value={inputData}
+                        onChange={ this.onChangeInput}
                         type="text"
-                        name="image"
                         autocomplete="off"
                         autofocus
                         placeholder="Search images and photos"
-                        value={this.state.searchImage}
-                        className={css.SearchFormInput}
-                        onChange={this.handleImageChange}
-                    ></input>
-                    <button type="submit" className={css.SearchFormButton}>
-                        <FcSearch size={30} />
-                        <span className={css.SearchFormButtonLabel}>Search</span>
-                    </button>
+                       />
                 </form>
             </header>
         );
     }
 }
+export default Searchbar;
+Searchbar.proppType = {
+    onSubmit: PropTypes.func.isRequired,
+};

@@ -1,9 +1,9 @@
-import { RotatingLines } from "react-loader-spinner";
-import css from './ Loader.module.css';
+import { ThreeDots } from "react-loader-spinner";
+import './ Loader.css';
 
-export const Loader = () => { 
+const Loader = () => { 
     return (
-        <section className={css.SectionLoader}>
+        <div className="Spinner">
             <RotatingLines
                 strokeColor="grey"
                 strokeWidth="4"

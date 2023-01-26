@@ -1,11 +1,9 @@
-import css from './Button.module.css';
+import './Button.css';
 
-export const Button = ({ omClick }) => { 
+const Button = ({ omClick }) => { 
     return (
-        <div className={ css.ButtonWrap}>
-            <button onClick={onClick} type="button" className={css.Button} >
+        <button className="Button" onClick={onClick}>
                 Load more
             </button>
-        </div>
     );
 };
