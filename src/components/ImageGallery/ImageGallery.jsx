@@ -1,5 +1,6 @@
-import { ImageGalleryItems } from '../ImageGalleryItem'; 
-import './ImageGellery.css';
+import './ImageGellary.css';
+import PropTypes from 'prop-types';
+import ImageGalleryItem from '../ImageGalleryItem';
 
 function ImageGallery ({ items}) { 
     return (

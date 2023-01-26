@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Button from "./Button";
-import ImageGallery from "./ImageGallery";
+import ImageGallery from "./ImageGallery/ImageGallery";
 import './App.css';
-import { fetchImages}  from "./fetchImages";
-import Searchbar from "./Searchbar";
+import { fetchImages}  from "./fetchImages/fetchImages";
+import Searchbar from "./Searchbar/Searchbar";
 import Notiflix from "notiflix";
 import { Loader } from "./Loader";
 
