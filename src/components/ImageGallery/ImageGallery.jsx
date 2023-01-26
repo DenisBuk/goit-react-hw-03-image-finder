@@ -1,4 +1,4 @@
-import './ImageGellary.css';
+
 import PropTypes from 'prop-types';
 import ImageGalleryItem from '../ImageGalleryItem';
 

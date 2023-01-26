@@ -5,7 +5,7 @@ import './App.css';
 import { fetchImages}  from "./fetchImages/fetchImages";
 import Searchbar from "./Searchbar/Searchbar";
 import Notiflix from "notiflix";
-import { Loader } from "./Loader";
+import Loader from "./Loader";
 
 let page = 1;
 class App extends Component {
