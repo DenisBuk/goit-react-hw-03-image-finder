@@ -1,9 +1,16 @@
 import './Button.css';
+import PropTypes from 'prop-types';
 
 const Button = ({ omClick }) => { 
     return (
-        <button className="Button" onClick={onClick}>
+        <button className="Button-load" onClick={onClick}>
                 Load more
             </button>
     );
+};
+
+export default Button;
+
+Button.propTypes = {
+    onClick: PropTypes.func,
 };
