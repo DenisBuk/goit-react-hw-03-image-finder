@@ -23,10 +23,10 @@ class Searchbar extends Component {
     render() {
         const { inputData } = this.state.inputData;
         return (
-            <header className={Searchbar}>
-                <form className={SearchForm} onSubmit={this.handleSubmit}>
-                    <button type="submit" className={SearchFormButton}>
-                        <IMSearch size={25} />
+            <header className="Searchbar">
+                <form className="SearchForm" onSubmit={this.handleSubmit}>
+                    <button type="submit" className="SearchFormButton">
+                        <ImSearch size={25} />
                     </button>
 
                     <input
