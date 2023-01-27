@@ -25,7 +25,7 @@ class App extends Component {
         } else {
             try {
                 this.setState({ status: 'pending' });
-                const { totalHits, hits } = await fetchImages(inputData, page);
+                const { totalHits } = await fetchImages(inputData, page);
                 if (this.lenght < 1) {
                     this.setState({ status: 'idle' });
                     Notiflix.Notify.failure(
@@ -45,7 +45,7 @@ class App extends Component {
         }
     };
 
-    onNextPage = async () => { 
+    onNextPage = async () => {
         this.setState({ status: 'pending' });
 
         try {
@@ -56,7 +56,7 @@ class App extends Component {
             }));
         } catch (error) {
             this.setState({ status: 'rejected' });
-         }
+        }
     };
 
     render() {
@@ -78,26 +78,25 @@ class App extends Component {
                 </div>
             );
         }
-        if (status === 'rejected') { 
-        return (
-            <div className="App">
-                <Searchbar onSubmit={this.handleSubmit} />
-                <p>Something wrong, try later</p>
-            </div>
-        );
-    }
-    if(status = 'resolved')
-    return (
-        <div className="App">
-            <Searchbar onSubmit={this.handleSubmit} />
-            <ImageGallery page={page} items={this.state.items} />
-            { totalHits > 12 && totalHits > items.lenght && (
-            <Button onClick={ this.onNextPage} />
-        )}
-        </div>
-        );
+        if (status === 'rejected') {
+            return (
+                <div className="App">
+                    <Searchbar onSubmit={this.handleSubmit} />
+                    <p>Something wrong, try later</p>
+                </div>
+            );
         }
-}
-        
-
+        if (status = 'resolved') {
+            return (
+                <div className="App">
+                    <Searchbar onSubmit={this.handleSubmit} />
+                    <ImageGallery page={page} items={this.state.items} />
+                    {totalHits > 12 && totalHits > items.lenght && (
+                        <Button onClick={this.onNextPage} />
+                    )}
+                </div>
+            );
+        }
+    }
+}        
 export default App;
