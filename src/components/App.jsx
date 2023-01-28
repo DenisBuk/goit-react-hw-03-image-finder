@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import API from './apiServices/PixabayAPI';
 
 import Searchbar from './Searchbar/Searchbar';
@@ -14,7 +14,7 @@ import './App.css';
 class App extends Component {
     constructor(props) {
         super(props);
-    
+
         this.state = {
             imageSearch: '',
             images: [],
@@ -31,7 +31,7 @@ class App extends Component {
     };
 
 
-    componentDidUpdate(prevProps, prevState) { 
+    componentDidUpdate(prevProps, prevState) {
         const prevName = prevState.imageSearch;
         const nextName = this.state.imageSearch;
         const prevPage = prevState.page;
@@ -41,12 +41,12 @@ class App extends Component {
             this.status({ status: 'pending', page: 1, images: [] });
             this.fetchImages(nextName, nextPage);
         }
-        if (prevPage !== nextPage) { 
+        if (prevPage !== nextPage) {
             this.fetchImages(nextName, nextPage)
         }
-     }
+    }
 
-    fetchImages(nextName, nextPage) { 
+    fetchImages(nextName, nextPage) {
         API.fetchImages(nextName, nextPage)
             .then(data => {
                 this.setState(prevState => {
@@ -67,7 +67,7 @@ class App extends Component {
             })
             .catch(error => this.setState({ error, status: 'rejectd' }));
     }
-    
+
     handleSubmit = name => {
         this.fetchImages(name, this.state.page);
     };
@@ -79,7 +79,7 @@ class App extends Component {
         }));
     };
 
-    closeModal = () => { 
+    closeModal = () => {
         this.setState(() => ({
             showModal: false,
         }));
@@ -92,33 +92,33 @@ class App extends Component {
     }
 
     render() {
-        return(
-        <div>
-            <Searchbar onSubmit={this.handleFormSubmit} />
-            {this.state.status === 'idle' && <p>Enter your request...</p>}
-            <ImageGallery
-                images={this.state.images}
-                toggleModal={largeImageURL => this.toggleModal(largeImageURL)} />
-            {this.state.status === 'pending' && <Loader />}
-            {this.state.images.length !== 0 && <Button loadMore={this.loadMore} />} 
+        return (
+            <div>
+                <Searchbar onSubmit={this.handleFormSubmit} />
+                {this.state.status === 'idle' && <p>Enter your request...</p>}
+                <ImageGallery
+                    images={this.state.images}
+                    toggleModal={largeImageURL => this.toggleModal(largeImageURL)} />
+                {this.state.status === 'pending' && <Loader />}
+                {this.state.images.length !== 0 && <Button loadMore={this.loadMore} />}
 
-            {this.state.showModal && (
-                <Modal
-                    onClick={() => {
-                        this.toggleModal()
-                    }}
-            images={this.state.biggerimage}
-            closeModal={ this.closeModal}
-              />  
-            )}
-            <ToastContainer autoClose={3000} />
-            {this.state.images.length === 0 && this.state.status === 'resolved' ? (
-                <div>On Request {this.state.imageSearch} not found</div>
-            ) : null}
-            {this.state.status === 'rejected' && <div>{this.state.error}</div>}
-        </div>
+                {this.state.showModal && (
+                    <Modal
+                        onClick={() => {
+                            this.toggleModal()
+                        }}
+                        images={this.state.biggerimage}
+                        closeModal={this.closeModal}
+                    />
+                )}
+                <ToastContainer autoClose={3000} />
+                {this.state.images.length === 0 && this.state.status === 'resolved' ? (
+                    <div>On Request {this.state.imageSearch} not found</div>
+                ) : null}
+                {this.state.status === 'rejected' && <div>{this.state.error}</div>}
+            </div>
         );
     }
-}        
+}
 
 export default App;
