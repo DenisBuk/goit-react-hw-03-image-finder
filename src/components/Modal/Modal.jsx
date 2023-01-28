@@ -1,5 +1,5 @@
 import './Modal.css';
-import React, { Component } from 'react/cjs/react.propduction.min';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 

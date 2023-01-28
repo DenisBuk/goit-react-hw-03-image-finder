@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
-import Loader from "react-loader-spinner";
+import { Audio } from "react-loader-spinner";
 
-export default class App extends Component {
+ export default class App extends Component {
     render() {
         return (
-            <Loader
+            <Audio
   height="80"
   width="80"
   radius="9"
@@ -13,7 +13,7 @@ export default class App extends Component {
   ariaLabel="loading"
   wrapperStyle
   wrapperClass
-                />
+            />
         );
     }
 }
