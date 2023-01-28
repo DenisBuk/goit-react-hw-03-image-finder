@@ -2,38 +2,46 @@ import './Searchbar.css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { ImSearch } from 'react-icons/im';
-class Searchbar extends Component {
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+export default class Searchbar extends Component {
     
     state = {
-        inputData: '',
+        imageSearch: '',
     };
 
-    onChange = event => {
-        this.setState({ inputData: event.currentTarget.value.toLowerCase() });
+    handleNameChange = event => {
+        this.setState({ imageSearch: event.currentTarget.value.toLowerCase() });
     };
 
     handleSubmit = event => {
         event.preventDefault();
-        this.props.onSubmit(this.state.inputData);
-        this.setState({ inputData: '' });
+        if (this.state.imageSearch.trim() === ''); { 
+            toast('Enter your request');
+            return;
+        }
+        this.props.onSubmit(this.state.imageSearch);
+        this.setState({ imageSearch: '' });
     };
 
     render() {
-        const { inputData } = this.state.inputData;
+        
         return (
             <header className="Searchbar">
-                <form className="SearchForm" onSubmit={this.handleSubmit}>
-                    <button type="submit" className="SearchFormButton">
-                        <ImSearch size={25} />
+                <form className="SearchForm" onSubmit={this.props.onSubmit}>
+                    <button
+                        type="submit"
+                        className="SearchFormButton"
+                        onClick={ this.handleSubmit}
+                    >
+                        <span className="SearchbarButtonLabel">Search</span>
                     </button>
 
                     <input
                         className="SearchFormInput"
-                        name="inputData"
-                        value={inputData}
-                        onChange={ this.onChangeInput}
+                        name="imageSearch"
+                        value={this.state.imageSearch}
+                        onChange={ this.handleNameChange}
                         type="text"
                         autocomplete="off"
                         autofocus
@@ -44,7 +52,9 @@ class Searchbar extends Component {
         );
     }
 }
-export default Searchbar;
+
+
 Searchbar.proppType = {
     onSubmit: PropTypes.func.isRequired,
+    imageSearch: PropTypes.string,
 };

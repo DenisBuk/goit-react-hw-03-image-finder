@@ -1,19 +1,18 @@
-import { ThreeDots } from "react-loader-spinner";
-import './Loader.css';
+import React, { Component } from 'react';
 
-const Loader = () => { 
-    return (
-        <div className="Spinner">
-            <ThreeDots
-                height="80"
-                width="80"
-                radius="9"
-                color="#000000"
-                ariaLabel="three-dots-loading"
+import Loader from "react-loader-spinner";
+
+export default class App extends Component {
+    render() {
+        return (
+            <Loader
+                type="Puff"
+                color="#00BFFF"
+                height={100}
+                width={100}
+                timeout={3000}
                 visible={true}
-            />
-        </div>
-    );
-};
-
-export default Loader;
+                />
+        );
+    }
+}

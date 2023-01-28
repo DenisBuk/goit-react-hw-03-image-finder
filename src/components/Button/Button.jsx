@@ -1,16 +1,10 @@
 import './Button.css';
-import PropTypes from 'prop-types';
 
-const Button = ({ omClick }) => { 
+
+export default function Button ({ loadMore }) { 
     return (
-        <button className="Button-load" onClick={onclick}>
+        <button className="Button" type="button" onClick={loadMore}>
                 Load more
             </button>
     );
-};
-
-export default Button;
-
-Button.propTypes = {
-    onClick: PropTypes.func,
 };

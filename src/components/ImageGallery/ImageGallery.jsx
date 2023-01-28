@@ -1,21 +1,19 @@
-
-import PropTypes from 'prop-types';
 import ImageGalleryItem from '../ImageGalleryItem';
+import './ImageGallery.css';
 
-function ImageGallery ({ items}) { 
+
+export default function ImageGallery ({ images, toggleModal}) { 
     return (
-        <>
             <ul classname={ImageGallery}>
-                {items.map(item => (
-                    <ImageGalleryItem key={item.id} item={ item} />
+            {items.map(({id, tags, webformatURL, largeImageURL }) => (
+                <ImageGalleryItem
+                    key={id}
+                    tags={tags}
+                    smallImage={webformatURL}
+                    largeImage={largeImageURL}
+                    onClickItem={() => { toggleModal(largeImageURL)}}
+                />
                 ))}
             </ul>
-    </>
     );
 }
-
-export default ImageGallery;
-
-ImageGallery.propTypes = {
-    items: PropTypes.array,
-};
