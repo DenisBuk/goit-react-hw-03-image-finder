@@ -2,10 +2,10 @@ import ImageGalleryItem from '../ImageGalleryItem';
 import './ImageGallery.css';
 
 
-export default function ImageGallery ({ images, toggleModal}) { 
+export default function ImageGallery({ images, toggleModal}) { 
     return (
             <ul classname={ImageGallery}>
-            {items.map(({id, tags, webformatURL, largeImageURL }) => (
+            {images.map(({id, tags, webformatURL, largeImageURL }) => (
                 <ImageGalleryItem
                     key={id}
                     tags={tags}
