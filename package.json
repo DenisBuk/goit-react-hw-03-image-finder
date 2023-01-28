@@ -11,6 +11,7 @@
     "firebase": "^9.16.0",
     "im-search": "^0.0.4",
     "notiflix": "^3.2.6",
+    "pixabay-api": "^1.0.4",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-icons": "^4.7.1",
