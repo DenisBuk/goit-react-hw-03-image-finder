@@ -1,6 +1,6 @@
 import './Modal.css';
 import React, { Component } from 'react/cjs/react.propduction.min';
-import PropTypes, {srting } from 'prop-types';
+import PropTypes from 'prop-types';
 
 
 
@@ -20,7 +20,7 @@ export default class Modal extends Component {
     };
 
      render() {
-        const { lonClick, image } = this.props;
+        const { onClick, image } = this.props;
         return (
             <div className="Overlay"
                 onClick={onClick}
@@ -37,6 +37,6 @@ export default class Modal extends Component {
 
 Modal.propTypes = {
     onClick: PropTypes.func,
-    image: string,
+    image: PropTypes.string.isRequired,
     closeModal: PropTypes.func,
 };
