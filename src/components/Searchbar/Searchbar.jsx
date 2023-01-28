@@ -16,9 +16,9 @@ export default class Searchbar extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        if (this.state.imageSearch.trim() === ''); { 
+        if (this.state.imageSearch.trim() === '') { 
             toast('Enter your request');
-            return
+            return;
         }
         this.props.onSubmit(this.state.imageSearch);
         this.setState({ imageSearch: '' });
