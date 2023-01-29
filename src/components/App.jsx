@@ -63,7 +63,7 @@ class App extends Component {
     }
 
     handleSubmit = name => {
-        this.setState(this.state.name, this.state.page);
+       this.fetchImages(name, this.state.page);
     };
 
     toggleModal = largeImageURL => {
