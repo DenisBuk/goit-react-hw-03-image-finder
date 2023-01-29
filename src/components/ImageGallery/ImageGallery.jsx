@@ -2,7 +2,7 @@ import ImageGalleryItem from '../ImageGalleryItem';
 import './ImageGallery.css';
 import propTypes from 'prop-types';
 
-export const ImageGallery = ({ images, toggleModal}) => (
+export const ImageGallery = ({ images, onImageClick}) => (
             <ul classname={ImageGallery}>
                 {images.map((image, index) =>(   
                 <ImageGalleryItem

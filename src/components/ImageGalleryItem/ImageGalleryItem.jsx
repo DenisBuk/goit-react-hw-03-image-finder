@@ -8,7 +8,7 @@ export const ImageGalleryItem = ({ image, onClick }) => (
                className="ImageGalleryItem-image"
                src={image.webformatURL}
                alt={image.tags}
-               name={largeImageURL}
+               name={image.largeImageURL}
                 />
             </li >
         );
@@ -17,3 +17,5 @@ ImageGalleryItem.propTypes = {
     image: propTypes.object.isRequired,
     onClick: propTypes.func.isRequired,
 };
+
+export default ImageGalleryItem;
