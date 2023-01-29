@@ -12,10 +12,9 @@ import Modal from './Modal/Modal'
 import './App.css';
 
 class App extends Component {
-    constructor(props) {
-        super(props);
+    
 
-        this.state = {
+    state = {
             imageSearch: '',
             images: [],
             status: 'idle',
@@ -26,9 +25,6 @@ class App extends Component {
             error: '',
         };
 
-        this.loadMore = this.loadMore.bind(this);
-        this.closeModal = this.closeModal.bind(this);
-    };
 
 
     componentDidUpdate(prevProps, prevState) {
