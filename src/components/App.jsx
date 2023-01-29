@@ -63,7 +63,7 @@ class App extends Component {
     }
 
     handleSubmit = name => {
-        this.fetchImages(name, this.state.page);
+        this(name, this.state.page);
     };
 
     toggleModal = largeImageURL => {
@@ -88,7 +88,7 @@ class App extends Component {
     render() {
         return (
             <div>
-                <Searchbar onSubmit={this.handleFormSubmit} />
+                <Searchbar onSubmit={this.handleSubmit} />
                 {this.state.status === 'idle' && <p>Enter your request...</p>}
                 <ImageGallery
                     images={this.state.images}
