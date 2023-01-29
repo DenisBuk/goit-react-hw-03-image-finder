@@ -1,8 +1,10 @@
 const BASE_URL = 'https://pixabay.com/api';
+const KEY = '33208866-b30484cdea6ad4b23b3d7b77d';
+const FILTER = '&image_type=photo&orientation=horizontal&per_page12';
 
 function fetchImages(nextName, page) {
     
-    return fetch(`${BASE_URL}?q=${nextName}&page=${page}$key22948262-953a9601ef8ec29dc611c2152&image_type=photo&orientation=horizontal&per_page12
+    return fetch(`${BASE_URL}?q=${nextName}&page=${page}$key=${KEY}${FILTER}
     `,
     ).then(response => {
         if (response.ok) {
@@ -12,6 +14,6 @@ function fetchImages(nextName, page) {
            
 }
 const api = {fetchImages};
- export default api;
+export default api;
 
 
