@@ -25,8 +25,6 @@ class App extends Component {
             error: '',
         };
 
-
-
     componentDidUpdate(prevProps, prevState) {
         const prevName = prevState.imageSearch;
         const nextName = this.state.imageSearch;

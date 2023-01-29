@@ -20,8 +20,8 @@ export default class Searchbar extends Component {
             toast('Enter your request');
             return;
         }
-        console.log(this.props)
-        //*this.props this.props.onSubmit(this.state.imageSearch);*//
+        console.log(this.props);
+        //* this.props.onSubmit(this.state.imageSearch); *//
         this.setState({ imageSearch: '' });
     };
 
