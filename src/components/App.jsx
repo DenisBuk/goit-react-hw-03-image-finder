@@ -10,7 +10,7 @@ import React from 'react';
 export class App extends Component {
     
     state = {
-            images: [],
+        images: [],
         isLoading: false,
         currentSearch: '',
         pageNr: 1,
