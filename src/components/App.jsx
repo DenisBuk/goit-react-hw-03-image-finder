@@ -1,118 +1,112 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
+import { Searchbar } from './Searchbar/Searchbar';
+import { Modal } from './Modal/Modal';
+import { Loader } from './Loader/Loader';
+import { Button } from './Button/Button';
+import { ImageGallery } from './ImageGallery/ImageGallery';
+import { fetchImages } from './Api/fetchImages';
+import React from 'react';
 
-import { ToastContainer } from 'react-toastify';
-import API from './apiServices/PixabayAPI';
-
-import Searchbar from './Searchbar/Searchbar';
-import ImageGallery from './ImageGallery/ImageGallery';
-import Loader from './Loader/Loader';
-import Button from './Button/Button';
-import Modal from './Modal/Modal'
-
-import './App.css';
-
-class App extends Component {
+export class App extends Component {
     
-
     state = {
-            imageSearch: '',
             images: [],
-            status: 'idle',
-            page: 1,
-            buttonMore: false,
-            biggerimage: '',
-            showModal: false,
-            error: '',
+        isLoading: false,
+        currentSearch: '',
+        pageNr: 1,
+        modalOpen: false,
+        modalImg: '',
+        modalAlt: '',
         };
 
-    componentDidUpdate(prevProps, prevState) {
-        const prevName = prevState.imageSearch;
-        const nextName = this.state.imageSearch;
-        const prevPage = prevState.page;
-        const nextPage = this.state.page;
+    
 
-        if (prevName !== nextName) {
-            this.status({ status: 'pending', page: 1, images: [] });
-            this.fetchImages(nextName, nextPage);
+    handleSubmit = async e => {
+        e.preventDefault();
+        this.setState({ isLoading: true });
+        const inputForSearch = e.target.elements.inputForSearch;
+        if (inputForSearch.value.trim() === '') { 
+            return;
         }
-        if (prevPage !== nextPage) {
-            this.fetchImages(nextName, nextPage)
+
+        const response = await fetchImages(inputForSearch.value, 1);
+        this.setState({
+            images: response,
+            isLoading: false,
+            currentSearch: inputForSearch.value,
+            pageNr: 1,
+        });
+    };
+
+    handleClickMore = async () => {
+        const responce = await fetchImages(
+            this.state.currentSearch,
+            this.state.pageNr + 1
+        );
+        this.setState({
+            images: [...this.state.images, ...responce],
+            pageNr: this.state.pageNr + 1,
+        });
+    };
+
+   handleImageClick = e => {
+       this.setState({
+           modalOpen: true,
+           modalAlt: e.target.alt,
+           modalImg: e.target.name,
+       });
+    };
+
+    handleModalClose = () => { 
+        this.setState({
+            modalOpen: false,
+            modalImg: '',
+            modalAlt: '',
+        });
+    };
+
+    handleKeyDown = event => {
+        if (event.code === 'Escape') {
+            this.handleModalClose();
         }
-    }
-
-    fetchImages(nextName, nextPage) {
-        API.fetchImages(nextName, nextPage)
-            .then(data => {
-                this.setState(prevState => {
-                    return {
-                        prevState,
-                        images: [...prevState.images, ...data.hits],
-                        status: 'resolved',
-                        imageSearch: nextName,
-                    };
-                });
-
-                if (this.prevPage !== nextPage) {
-                    window.scrollTo({
-                        top: document.documentElement.scrollHeight,
-                        behavior: 'smooth',
-                    });
-                }
-            })
-            .catch(error => this.setState({ error, status: 'rejectd' }));
-    }
-
-    handleSubmit = name => {
-       this.fetchImages(name, this.state.page);
     };
 
-    toggleModal = largeImageURL => {
-        this.setState(({ showModal, biggerimage }) => ({
-            showModal: !showModal,
-            biggerimage: largeImageURL,
-        }));
-    };
 
-    closeModal = () => {
-        this.setState(() => ({
-            showModal: false,
-        }));
-    };
-
-    loadMore() {
-        this.setState(prevState => ({
-            page: prevState.page + 1,
-        }));
+    async componentDidMount() { 
+        window.addEventListener('keydown', this.handleKeyDown);
     }
+
 
     render() {
         return (
-            <div>
-                <Searchbar onSubmit={this.handleSubmit} />
-                {this.state.status === 'idle' && <p>Enter your request...</p>}
-                <ImageGallery
-                    images={this.state.images}
-                    toggleModal={largeImageURL => this.toggleModal(largeImageURL)} />
-                {this.state.status === 'pending' && <Loader />}
-                {this.state.images.length !== 0 && <Button loadMore={this.loadMore} />}
-
-                {this.state.showModal && (
-                    <Modal
-                        onClick={() => {
-                            this.toggleModal()
-                        }}
-                        images={this.state.biggerimage}
-                        closeModal={this.closeModal}
-                    />
-                )}
-                <ToastContainer autoClose={3000} />
-                {this.state.images.length === 0 && this.state.status === 'resolved' ? (
-                    <div>On Request {this.state.imageSearch} not found</div>
+            <div
+                style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1fr',
+                    gridGap: '16px',
+                    paddingBottom: '24px',
+                }}
+            >
+                {this.state.isLoading ? (
+                    <Loader />) : (
+                    <React.Fragment>
+                        <Searchbar onSubmit={this.handleSubmit} />
+                        <ImageGallery
+                            onImageClick={this.handleImageClick}
+                            images={this.state.images}
+                        />
+                        {this.state.images.length > 0 ? (
+                            <Button onClick={this.handleClickMore} />
+                        ) : null}
+                    </React.Fragment>
+                )} 
+                {this.state.modalOpen ? (<Modal
+                    src={this.state.modalImg}
+                    alt={this.state.modalAlt}
+                    handleClose={this.handleModalClose} />
                 ) : null}
-                {this.state.status === 'rejected' && <div>{this.state.error}</div>}
-            </div>
+           </div>
         );
     }
 }
 
-export default App;
