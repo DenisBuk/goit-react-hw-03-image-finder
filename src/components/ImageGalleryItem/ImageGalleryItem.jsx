@@ -1,21 +1,21 @@
 import './ImageGalleryItem.css';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 
-export const ImageGalleryItem = ({ image, onClick }) => (
-    <li className="ImageGalleryItem" id={image.id} onClick={onClick}>
+export const ImageGalleryItem = ({ url, tag, openModal, largeImageURL }) => (
+    <li className="ImageGalleryItem">
                 <img
-               className="ImageGalleryItem-image"
-               src={image.webformatURL}
-               alt={image.tags}
-               name={image.largeImageURL}
+            className="ImageGalleryItem-image"
+            src={url}
+            alt={tag}
+            onClick={() =>  openModal(largeImageURL, tag )}
                 />
-            </li >
+            </li>
         );
 
 ImageGalleryItem.propTypes = {
-    image: propTypes.object.isRequired,
-    onClick: propTypes.func.isRequired,
+    url: PropTypes.string.isRequired,
+    tag: PropTypes.string.isRequired,
+    largeImageURL: PropTypes.string.isRequired,
+    openModal: PropTypes.func.isRequired,
 };
-
-export default ImageGalleryItem;

@@ -4,109 +4,109 @@ import { Modal } from './Modal/Modal';
 import { Loader } from './Loader/Loader';
 import { Button } from './Button/Button';
 import { ImageGallery } from './ImageGallery/ImageGallery';
-import { fetchImages } from './Api/fetchImages';
+import { fetchImages, needValues } from './Api/Api';
 import React from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export class App extends Component {
     
     state = {
         images: [],
+        searchQuery: '',
+        page: 1,
+        error: null,
         isLoading: false,
-        currentSearch: '',
-        pageNr: 1,
-        modalOpen: false,
-        modalImg: '',
-        modalAlt: '',
-        };
+        showModal: false,
+        largeImageURL: '',
+        tags: '',
+    };
 
+    componentDidUpdate(prevProps, prevState) {
+        const prevSearchQuery = prevState.searchQuery;
+        const nextSearchQuery = this.state.searchQuery;
+        const prevPage = prevState.page;
+        const page = this.state.page;
+
+        if (prevSearchQuery !== nextSearchQuery || prevPage !== page) { }
+        this.renderGallery();
+    }
+    }
+
+renderGallery = async () => {
+    const { searchQuery, page } = this.state;
+    this.setState({ isLoading: true });
+
+    try {
+        const { hits, totalHits } = await fetchImages(searchQuery, page);
+
+        if (totalHits === 0) {
+            toast.warn(
+                'Sorry. Please try again.'
+            );
+        }
+
+        const newImages = needValues(hits);
+
+        this.setState(({ images }) => ({
+            images: [...images, ...newImages],
+            totalHits,
+        }));
+    } catch (error) {
+        this.setState({ error });
+        toast.error('Something went wrong');
+    } finally { 
+        this.setState({ isLoading: false });
+    }
+};
     
-
-    handleSubmit = async e => {
-        e.preventDefault();
-        this.setState({ isLoading: true });
-        const inputForSearch = e.target.elements.inputForSearch;
-        if (inputForSearch.value.trim() === '') { 
-            return;
-        }
-
-        const response = await fetchImages(inputForSearch.value, 1);
+    onFormSubmit = searchQuery => { 
+        this.setState({ searchQuery, images: [], page: 1 });
+    };
+    
+    onLoadMore = () => { 
+        this.setState(prevState => ({
+            page: prevState.page + 1,
+        }));
+    };
+    
+    openModal = (largeImageURL, tags) => {
+        this.toggleModal();
         this.setState({
-            images: response,
-            isLoading: false,
-            currentSearch: inputForSearch.value,
-            pageNr: 1,
+            largeImageURL,
+            tags,
         });
     };
-
-    handleClickMore = async () => {
-        const responce = await fetchImages(
-            this.state.currentSearch,
-            this.state.pageNr + 1
-        );
-        this.setState({
-            images: [...this.state.images, ...responce],
-            pageNr: this.state.pageNr + 1,
-        });
-    };
-
-   handleImageClick = e => {
-       this.setState({
-           modalOpen: true,
-           modalAlt: e.target.alt,
-           modalImg: e.target.name,
-       });
-    };
-
-    handleModalClose = () => { 
-        this.setState({
-            modalOpen: false,
-            modalImg: '',
-            modalAlt: '',
-        });
-    };
-
-    handleKeyDown = event => {
-        if (event.code === 'Escape') {
-            this.handleModalClose();
-        }
-    };
-
-
-    async componentDidMount() { 
-        window.addEventListener('keydown', this.handleKeyDown);
+    
+    toggleModal = () => { 
+        this.setState(({ showModal }) => ({
+            showModal: !showModal,
+        }));
     }
 
 
-    render() {
-        return (
-            <div
-                style={{
-                    display: 'grid',
-                    gridTemplateColumns: '1fr',
-                    gridGap: '16px',
-                    paddingBottom: '24px',
-                }}
-            >
-                {this.state.isLoading ? (
-                    <Loader />) : (
-                    <React.Fragment>
-                        <Searchbar onSubmit={this.handleSubmit} />
-                        <ImageGallery
-                            onImageClick={this.handleImageClick}
-                            images={this.state.images}
-                        />
-                        {this.state.images.length > 0 ? (
-                            <Button onClick={this.handleClickMore} />
-                        ) : null}
-                    </React.Fragment>
-                )} 
-                {this.state.modalOpen ? (<Modal
-                    src={this.state.modalImg}
-                    alt={this.state.modalAlt}
-                    handleClose={this.handleModalClose} />
-                ) : null}
-           </div>
-        );
-    }
-}
+render() {
+    const { images, isLoading, largeImageURL, tags, showModal, totalHits } = this.state;
+
+    const allImages = images.length === totalHits;
+
+    return (
+        <>
+            <Searchbar onSubmit={this.onFormSubmit} />
+            <ToastContainer autoClose={4000} />
+            <ImageGallery images={images} onOpenModal={this.openModal} />
+            {isLoading && <Loader />}
+            {images.length !== 0 && !isLoading && !allImages && (
+                <Button onClick={this.onLoadMore} />
+            )}
+            {showModal && (
+                <Modal
+                    onModalClick={this.toggleModal}
+                    largeImage={largeImageURL}
+                    alt={tags}
+                />
+            )}
+        </>
+    );
+ }
 
