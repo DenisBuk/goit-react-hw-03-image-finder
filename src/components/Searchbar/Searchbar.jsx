@@ -1,6 +1,12 @@
-import './Searchbar.css';
+import {
+  SearchbarHeader,
+  SearchFrom,
+  SearchFormButton,
+  SearchFormButtonLabel,
+SearchFormInput,} from './Searchbar.styled';
 import PropTypes from 'prop-types';
 import { Component } from 'react';
+import { BiSearchAlt} from 'react-icons/bi'
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -31,22 +37,24 @@ export class Searchbar extends Component {
   render() {
     const { searchQuery } = this.state;
     return (
-      <header className="Searchbar">
-        <form className="SearchForm" onSubmit={this.handleSubmit}>
-          <button type="submit" className="SearchFormButton">
-            <span className="SearchbarButtonLabel">Search</span>
-          </button>
+      <SearchbarHeader>
+        <SearchFrom onSubmit={this.handleSubmit}>
+          <SearchFormButton type="submit">
+            <BiSearchAlt style={{ width: 25, height: 25}}/>
+          </SearchFormButton>
 
-          <input
-            className="SearchFormInput"
+          <SearchFormButtonLabel>
+            <SearchFormInput
             onChange={this.handleChange}
             value={searchQuery}
             type="text"
             autocomplete="off"
             autofocus
-            placeholder="Search images and photos" />
-        </form>
-      </header>
+              placeholder="Search images and photos"
+            />
+          </SearchFormButtonLabel>
+        </SearchFrom>
+      </SearchbarHeader>
     ); 
   }
 }

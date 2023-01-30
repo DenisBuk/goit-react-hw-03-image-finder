@@ -31,40 +31,40 @@ export class App extends Component {
         if (prevSearchQuery !== nextSearchQuery || prevPage !== page) { }
         this.renderGallery();
     }
-    }
-
-renderGallery = async () => {
-    const { searchQuery, page } = this.state;
-    this.setState({ isLoading: true });
-
-    try {
-        const { hits, totalHits } = await fetchImages(searchQuery, page);
-
-        if (totalHits === 0) {
-            toast.warn(
-                'Sorry. Please try again.'
-            );
-        }
-
-        const newImages = needValues(hits);
-
-        this.setState(({ images }) => ({
-            images: [...images, ...newImages],
-            totalHits,
-        }));
-    } catch (error) {
-        this.setState({ error });
-        toast.error('Something went wrong');
-    } finally { 
-        this.setState({ isLoading: false });
-    }
-};
     
-    onFormSubmit = searchQuery => { 
+
+    renderGallery = async () => {
+        const { searchQuery, page } = this.state;
+        this.setState({ isLoading: true });
+
+        try {
+            const { hits, totalHits } = await fetchImages(searchQuery, page);
+
+            if (totalHits === 0) {
+                toast.warn(
+                    'Sorry. Please try again.'
+                );
+            }
+
+            const newImages = needValues(hits);
+
+            this.setState(({ images }) => ({
+                images: [...images, ...newImages],
+                totalHits,
+            }));
+        } catch (error) {
+            this.setState({ error });
+            toast.error('Something went wrong');
+        } finally {
+            this.setState({ isLoading: false });
+        }
+    };
+    
+    onFormSubmit = searchQuery => {
         this.setState({ searchQuery, images: [], page: 1 });
     };
     
-    onLoadMore = () => { 
+    onLoadMore = () => {
         this.setState(prevState => ({
             page: prevState.page + 1,
         }));
@@ -78,24 +78,24 @@ renderGallery = async () => {
         });
     };
     
-    toggleModal = () => { 
+    toggleModal = () => {
         this.setState(({ showModal }) => ({
             showModal: !showModal,
         }));
     }
+}
 
-
-render() {
+render() 
     const { images, isLoading, largeImageURL, tags, showModal, totalHits } = this.state;
 
     const allImages = images.length === totalHits;
 
-    return (
-        <>
+           <>
             <Searchbar onSubmit={this.onFormSubmit} />
             <ToastContainer autoClose={4000} />
             <ImageGallery images={images} onOpenModal={this.openModal} />
             {isLoading && <Loader />}
+
             {images.length !== 0 && !isLoading && !allImages && (
                 <Button onClick={this.onLoadMore} />
             )}
@@ -107,6 +107,6 @@ render() {
                 />
             )}
         </>
-    );
- }
+    
+ 
 

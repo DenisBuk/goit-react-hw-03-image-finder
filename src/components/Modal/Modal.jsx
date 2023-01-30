@@ -1,4 +1,4 @@
-import './Modal.css';
+import { Overlay, ModalWindow } from'./Modal.styled';
 import PropTypes from 'prop-types';
 import { Component  } from 'react';
 
@@ -28,12 +28,13 @@ export class Modal extends Component {
         const { largeImage, alt } = this.props;
 
         return (
-            <div className="Overlay" onClick={this.onBackDropClick}>
-                <img className="Modal" src={largeImage} alt={alt} />
-            </div>
+            <Overlay onClick={this.onBackDropClick}>
+                <ModalWindow>
+                    <img src={largeImage} alt={alt} />
+                    </ModalWindow>
+            </Overlay>
         );
     }
-
  }
 
 Modal.propTypes = {

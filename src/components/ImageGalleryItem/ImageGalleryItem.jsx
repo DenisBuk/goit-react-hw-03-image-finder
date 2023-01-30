@@ -1,17 +1,23 @@
-import './ImageGalleryItem.styled.js';
+import {
+    ImageGalleryItemCard,
+    ImageGalleryItemImage,
+} from 
+'./ImageGalleryItem.styled';
 import PropTypes from 'prop-types';
 
 
-export const ImageGalleryItem = ({ url, tag, openModal, largeImageURL }) => (
-    <li className="ImageGalleryItem">
-                <img
-            className="ImageGalleryItem-image"
+export const ImageGalleryItem = ({ url, tag, openModal, largeImageURL }) => {
+  return (
+    <ImageGalleryItemCard>
+                <ImageGalleryItemImage
+           
             src={url}
             alt={tag}
             onClick={() =>  openModal(largeImageURL, tag )}
                 />
-            </li>
+            </ImageGalleryItemCard>
         );
+};
 
 ImageGalleryItem.propTypes = {
     url: PropTypes.string.isRequired,
