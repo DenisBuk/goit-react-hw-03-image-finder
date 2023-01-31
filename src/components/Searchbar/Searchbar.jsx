@@ -48,8 +48,8 @@ export class Searchbar extends Component {
             onChange={this.handleChange}
             value={searchQuery}
             type="text"
-              autocomplete="off"
-              autoFocus
+            autocomplete="off"
+            autoFocus
             placeholder="Search images and photos"
             />
           </SearchFormButtonLabel>
