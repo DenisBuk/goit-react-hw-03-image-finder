@@ -28,10 +28,10 @@ export class App extends Component {
         const prevPage = prevState.page;
         const page = this.state.page;
 
-        if (prevSearchQuery !== nextSearchQuery || prevPage !== page) { }
-        this.renderGallery();
+        if (prevSearchQuery !== nextSearchQuery || prevPage !== page) {
+            this.renderGallery();
+        }
     }
-    
 
     renderGallery = async () => {
         const { searchQuery, page } = this.state;
@@ -82,31 +82,33 @@ export class App extends Component {
         this.setState(({ showModal }) => ({
             showModal: !showModal,
         }));
+    };
+
+
+    render() {
+        const { images, isLoading, largeImageURL, tags, showModal, totalHits } =
+            this.state;
+
+        const allImages = images.length === totalHits;
+
+        return (
+            <>
+                <Searchbar onSubmit={this.onFormSubmit} />
+                <ToastContainer autoClose={4000} />
+                <ImageGallery images={images} onOpenModal={this.openModal} />
+                {isLoading && <Loader />}
+
+                {images.length !== 0 && !isLoading && !allImages && (
+                    <Button onClick={this.onLoadMore} />
+                )}
+                {showModal && (
+                    <Modal
+                        onModalClick={this.toggleModal}
+                        largeImage={largeImageURL}
+                        alt={tags}
+                    />
+                )}
+            </>
+        );
     }
 }
-
-render() 
-    const { images, isLoading, largeImageURL, tags, showModal, totalHits } = this.state;
-
-    const allImages = images.length === totalHits;
-
-           <>
-            <Searchbar onSubmit={this.onFormSubmit} />
-            <ToastContainer autoClose={4000} />
-            <ImageGallery images={images} onOpenModal={this.openModal} />
-            {isLoading && <Loader />}
-
-            {images.length !== 0 && !isLoading && !allImages && (
-                <Button onClick={this.onLoadMore} />
-            )}
-            {showModal && (
-                <Modal
-                    onModalClick={this.toggleModal}
-                    largeImage={largeImageURL}
-                    alt={tags}
-                />
-            )}
-        </>
-    
- 
-

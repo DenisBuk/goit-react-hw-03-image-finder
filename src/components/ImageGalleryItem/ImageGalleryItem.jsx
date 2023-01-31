@@ -6,11 +6,10 @@ import {
 import PropTypes from 'prop-types';
 
 
-export const ImageGalleryItem = ({ url, tag, openModal, largeImageURL }) => {
+export  const ImageGalleryItem = ({ url, tag, openModal, largeImageURL }) => {
   return (
     <ImageGalleryItemCard>
                 <ImageGalleryItemImage
-           
             src={url}
             alt={tag}
             onClick={() =>  openModal(largeImageURL, tag )}
@@ -25,3 +24,5 @@ ImageGalleryItem.propTypes = {
     largeImageURL: PropTypes.string.isRequired,
     openModal: PropTypes.func.isRequired,
 };
+
+export default ImageGalleryItem;

@@ -49,8 +49,7 @@ export class Searchbar extends Component {
             value={searchQuery}
             type="text"
             autocomplete="off"
-            autofocus
-              placeholder="Search images and photos"
+            placeholder="Search images and photos"
             />
           </SearchFormButtonLabel>
         </SearchFrom>
