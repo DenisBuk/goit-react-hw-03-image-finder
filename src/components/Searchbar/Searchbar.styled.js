@@ -49,7 +49,7 @@ export const SearchFormButton = styled.button`
 `;
 
 export const SearchFormButtonLabel = styled.label`
-    position: absolute;
+    /*position: absolute;
     width: 1px;
     height: 1px;
     padding: 0;
@@ -57,7 +57,7 @@ export const SearchFormButtonLabel = styled.label`
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     clip-path: inset(50%);
-    border: 0;
+    border: 0;*/
 `;
 
 export const SearchFormInput = styled.input `

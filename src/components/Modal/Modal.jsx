@@ -5,11 +5,11 @@ import { Component  } from 'react';
 export class Modal extends Component {
 
     componentDidMount() { 
-        window.addEventListener('keydown, this.onKeyDown');
+        window.addEventListener('keydown', this.onKeyDown);
     }
 
     componentWillUnmount() { 
-        window.removeEventListener('keydown, this.onKeyDown');
+        window.removeEventListener('keydown', this.onKeyDown);
     }
 
     onKeyDown = event => { 
