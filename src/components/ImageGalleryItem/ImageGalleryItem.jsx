@@ -1,28 +1,52 @@
+import React, { Component} from 'react';
 import {
     ImageGalleryItemCard,
     ImageGalleryItemImage,
 } from 
-'./ImageGalleryItem.styled';
-import PropTypes from 'prop-types';
+    './ImageGalleryItem.styled';
+import LargePhotModal from 'components/Modal';
 
 
-export  const ImageGalleryItem = ({ url, tag, openModal, largeImageURL }) => {
-  return (
-    <ImageGalleryItemCard>
-                <ImageGalleryItemImage
-            src={url}
-            alt={tag}
-            onClick={() =>  openModal(largeImageURL, tag )}
+
+class ImageGalleryItem extends Component {
+
+    state = {
+        largeImage: '',
+        isOpen: false,
+    };
+
+    onShowLargeImg = img => { 
+        this.setState(state => ({ isOpen: !state.isOpen }));
+        this.setState({ largeImage: img });
+    };
+
+render() {
+    const { items } = this.props;
+    const { isOpen, largeImage } = this.state;
+    return (
+      <>
+            {items.map(({ webformatURL, largeImageURL, id }) => {
+                return (
+            <ImageGalleryItemCard
+                key={id}
+                onClick={() =>this.onShowLargeImg(largeImageURL)}>
+            <ImageGalleryItemImage
+                    src={webformatURL}
+                    alt=""
+                    width={350}
+                    height={350}
                 />
             </ImageGalleryItemCard>
-        );
-};
-
-ImageGalleryItem.propTypes = {
-    url: PropTypes.string.isRequired,
-    tag: PropTypes.string.isRequired,
-    largeImageURL: PropTypes.string.isRequired,
-    openModal: PropTypes.func.isRequired,
-};
+            );
+            })}
+            {isOpen && (
+                <LargePhotModal
+                    largeImg={largeImage}
+                    onClose={ this.onShowLargeImg} />
+            )}
+            </>
+);
+}
+            }
 
 export default ImageGalleryItem;

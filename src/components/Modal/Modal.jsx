@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { createPortal } from 'react-dom';
 
 const modalRoot = document.querySelector('#modal-root');
- class Modal extends Component {
+ class LargePhotModal extends Component {
 
     componentDidMount() { 
         window.addEventListener('keydown', this.onCloseModal);
@@ -37,4 +37,4 @@ const modalRoot = document.querySelector('#modal-root');
     }
  }
 
-export default Modal;
+export default LargePhotModal;

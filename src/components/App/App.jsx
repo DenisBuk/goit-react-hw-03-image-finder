@@ -25,7 +25,6 @@ class App extends Component {
             this.setState({ loading: true });
             try {
                 const images = await fetchImages(name, page);
-                console.log(images);
                 this.setState({ totalHits: images.totalHits });
                 if (images.totalHits === 0) {
                     throw new Error();
