@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 export const ButtonLoadMore = styled.button`
    padding: 8px 16px;
@@ -25,4 +25,9 @@ export const ButtonLoadMore = styled.button`
 :focus {
     background-color: #303f9f;
 }
+`;
+
+export const ButtonLoadMoreContainer = styled.div`
+display: flex;
+justify-content: center;
 `;

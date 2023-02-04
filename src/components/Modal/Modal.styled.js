@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 export const Overlay = styled.div`
     position: fixed;
@@ -13,7 +13,7 @@ export const Overlay = styled.div`
     z-index: 1200;
 `;
 
-export const ModalWindow = styled.div`
+export const Modal = styled.div`
     position: absolute;
     top: 50%;
     left: 50%;
